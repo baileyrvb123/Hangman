@@ -57,7 +57,7 @@ void DrawHangman(int guessCount = 0)
     if(guessCount == 4)
         PrintMessage("/  ", false, false);
     if(guessCount == 5)
-        PrintMessage("/|", false, false);
+        PrintMessage("/| ", false, false);
     if(guessCount >= 6)
         PrintMessage("/|\\", false, false);
     else
@@ -67,7 +67,7 @@ void DrawHangman(int guessCount = 0)
     else
         PrintMessage("", false, false);
     if(guessCount == 8)
-        PrintMessage("/", false, false);
+        PrintMessage("/ ", false, false);
     if(guessCount >= 9)
         PrintMessage("/ \\", false, false);
     else
@@ -120,7 +120,7 @@ string LoadRandomWord(string path)
     string word;
     vector<string> v;
     ifstream reader(path);
-    if(reader.is_open())
+    if (reader.is_open())
     {
         while (std::getline(reader, word))
             v.push_back(word);
@@ -130,16 +130,18 @@ string LoadRandomWord(string path)
         word = v.at(randomLine);
         reader.close();
     }
+    return word;
 }
 int TriesLeft(string word, string guessed)
 {
     int error = 0;
     for (int i = 0; i < guessed.length(); i++)
     {
-        if(word.find(guessed[i] == string::npos)
+        if(word.find(guessed[i] == string::npos))
             error++;
     }
     return error;
+}
 int main ()
 {
     srand(time(0));
