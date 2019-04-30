@@ -2,6 +2,7 @@
 #include <vector>
 #include <fstream>
 #include <string>
+#include <time.h>
 using namespace std;
 void PrintMessage(string message, bool printTop = true, bool printBottom = true)
 {
@@ -54,7 +55,7 @@ void DrawHangman(int guessCount = 0)
     else
         PrintMessage("", false, false);
     if(guessCount == 4)
-        PrintMessage("/", false, false);
+        PrintMessage("/  ", false, false);
     if(guessCount == 5)
         PrintMessage("/|", false, false);
     if(guessCount >= 6)
@@ -130,17 +131,50 @@ string LoadRandomWord(string path)
         reader.close();
     }
 }
+int TriesLeft(string word, string guessed)
+{
+    int error = 0;
+    for (int i = 0; i < guessed.length(); i++)
+    {
+        if(word.find(guessed[i] == string::npos)
+            error++;
+    }
+    return error;
 int main ()
 {
-    string guesses = "ABHJIKL";
+    srand(time(0));
+    string guesses;
     string wordToGuess;
-    LoadRandomWord("words.txt");
+    wordToGuess = LoadRandomWord("words.txt");
+    int tries = 0;
+    bool win = false;
+    do
+    {
+        system("clear");
+        PrintMessage ("HANGMAN");
+        DrawHangman(tries);
+        PrintAvailableLetters(guesses);
+        PrintMessage("Guess the word");
+        PrintWordAndCheckWin(wordToGuess, guesses);
+        
+        if (win)
+            break;
+            
+        char x;
+        cout << ">"; cin>> x;
+        if (guesses.find(x) == string::npos)
+            guesses += x;
+            
+        tries = TriesLeft(wordToGuess, guesses);
+        
+    } while (tries < 10);
     
-    PrintMessage("HANG MAN");
-    DrawHangman(9);
-    PrintAvailableLetters(guesses);
-    PrintMessage("Guess the word");
-    PrintWordAndCheckWin("ALEXIS", guesses);
+    if(win)
+        PrintMessage("YOU WON!");
+    else
+        PrintMessage("GAME OVER");
+        
+    system ("pause");
     getchar();
     return 0;
 }
