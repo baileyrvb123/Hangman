@@ -1,4 +1,3 @@
-# Hangman
 #include <iostream> 
 using namespace std;
 void PrintMessage(string message, bool printTop = true, bool printBottom = true)
@@ -87,16 +86,39 @@ void PrintLetters(string input, char from, char to)
 }
 void PrintAvailableLetters(string taken)
 {
+    PrintMessage("Available letter");
     PrintLetters(taken, 'A', 'M');
     PrintLetters(taken, 'N', 'Z');
 }
+bool PrintWordAndCheckWin(string word, string guessed)
+{
+    bool won = true;
+    string s;
+    for(int i = 0; i < word.length(); i++)
+    {
+        if(guessed.find(word[i]) == string::npos)
+        {
+            won = false;
+            s += "_ ";
+        }
+        else
+        {
+            s += word[i];
+            s += " ";
+        }
+    }
+    PrintMessage(s, false);
+    return won;
+}
 int main ()
 {
-    string guesses;
+    string guesses = "ABHJIKL";
     
     PrintMessage("HANG MAN");
     DrawHangman(9);
-    PrintAvailableLetters("ALEXA");
+    PrintAvailableLetters(guesses);
+    PrintMessage("Guess the word");
+    PrintWordAndCheckWin("ALEXIS", guesses);
     getchar();
     return 0;
 }
