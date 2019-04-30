@@ -67,7 +67,7 @@ void DrawHangman(int guessCount = 0)
     else
         PrintMessage("", false, false);
     if(guessCount == 8)
-        PrintMessage("/ ", false, false);
+        PrintMessage("/  ", false, false);
     if(guessCount >= 9)
         PrintMessage("/ \\", false, false);
     else
@@ -147,7 +147,7 @@ int main ()
     srand(time(0));
     string guesses;
     string wordToGuess;
-    wordToGuess = LoadRandomWord("words.txt");
+    wordToGuess = LoadRandomWord("hangmanwords.txt");
     int tries = 0;
     bool win = false;
     do
