@@ -1,4 +1,7 @@
 #include <iostream> 
+#include <vector>
+#include <fstream>
+#include <string>
 using namespace std;
 void PrintMessage(string message, bool printTop = true, bool printBottom = true)
 {
@@ -110,9 +113,28 @@ bool PrintWordAndCheckWin(string word, string guessed)
     PrintMessage(s, false);
     return won;
 }
+string LoadRandomWord(string path)
+{
+    int lineCount = 0;
+    string word;
+    vector<string> v;
+    ifstream reader(path);
+    if(reader.is_open())
+    {
+        while (std::getline(reader, word))
+            v.push_back(word);
+        
+        int randomLine = rand() % v.size();
+        
+        word = v.at(randomLine);
+        reader.close();
+    }
+}
 int main ()
 {
     string guesses = "ABHJIKL";
+    string wordToGuess;
+    LoadRandomWord("words.txt");
     
     PrintMessage("HANG MAN");
     DrawHangman(9);
